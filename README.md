@@ -260,9 +260,9 @@ jobs:
 |-------|--------------|--------|
 | ✅ Phase 0 | UI Mockup | Done |
 | ✅ Phase 1 | Architecture | Done |
-| 🔜 Phase 2 | Next.js project scaffold + Supabase schema | Next |
-| 🔜 Phase 3 | URL scanner API (real integrations) | — |
-| 🔜 Phase 4 | Community reports system | — |
-| 🔜 Phase 5 | AI analysis with Claude API | — |
-| 🔜 Phase 6 | Authority reporting guide | — |
-| 🔜 Phase 7 | Polish + launch | — |
+| 🔜 Phase 2 | Next.js project scaffold + Supabase schema | Done |
+| 🔜 Phase 3 | URL scanner API (real integrations) | Done |
+| 🔜 Phase 4 | Community reports system | Done |
+| 🔜 Phase 5 | AI analysis with Claude API | Done |
+| 🔜 Phase 6 | Authority reporting guide | Done |
+| 🔜 Phase 7 | Polish + launch | Done |
