@@ -1,4 +1,4 @@
-'use client'
+use client'
 import { useState } from 'react'
 import TrustScore from '@/components/TrustScore'
 import FlagList from '@/components/FlagList'
@@ -23,6 +23,8 @@ export default function Home() {
   const [result, setResult] = useState(null)
   const [activeTab, setActiveTab] = useState('flags')
   const [errorMsg, setErrorMsg] = useState('')
+
+  const displayUrl = url.replace(/^https?:\/\//i, '')
 
   const handleScan = async () => {
     if (!url.trim()) return
@@ -140,8 +142,8 @@ export default function Home() {
             }}>
               <span style={{ color: 'var(--muted)', fontFamily: 'monospace', fontSize: 12, flexShrink: 0 }}>https://</span>
               <input
-                value={url}
-                onChange={e => setUrl(e.target.value)}
+                value={displayUrl}
+                onChange={e => setUrl(e.target.value.replace(/^https?:\/\//i, ''))}
                 onKeyDown={e => e.key === 'Enter' && handleScan()}
                 placeholder="suspicious-site.com"
                 style={{
@@ -203,7 +205,7 @@ export default function Home() {
               borderRadius: 12, padding: 24,
               display: 'grid', gridTemplateColumns: 'auto 1fr', gap: 24, alignItems: 'center',
             }}>
-              <TrustScore score={result.trust_score} verdict={result.verdict} />
+              <TrustScore score={result.trust_score ?? result.trustScore} verdict={result.verdict} />
               <div>
                 <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'var(--muted)', letterSpacing: 2, marginBottom: 6 }}>
                   SCANNED: {result.domain}
@@ -229,47 +231,3 @@ export default function Home() {
                       background: 'none', border: '1px solid var(--border)', borderRadius: 6,
                       padding: '8px 16px', color: 'var(--muted)', fontFamily: 'monospace',
                       fontSize: 10, letterSpacing: 1, cursor: 'pointer',
-                    }}>
-                    ← SCAN ANOTHER
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Tabs */}
-            <div style={{
-              display: 'flex', gap: 4, background: 'var(--surface)',
-              borderRadius: 8, padding: 4, border: '1px solid var(--border)',
-            }}>
-              {[
-                { id: 'flags', label: '🔍 AI Red Flags' },
-                { id: 'community', label: '👥 Community Reports' },
-                { id: 'report-authority', label: '📋 Report to Authorities' },
-              ].map(tab => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  style={{
-                    flex: 1, padding: '10px 12px', border: 'none', borderRadius: 6,
-                    cursor: 'pointer',
-                    background: activeTab === tab.id ? 'var(--card)' : 'none',
-                    color: activeTab === tab.id ? 'var(--text)' : 'var(--muted)',
-                    fontFamily: 'monospace', fontSize: 11,
-                    fontWeight: activeTab === tab.id ? 700 : 400,
-                    letterSpacing: 1, transition: 'all 0.2s',
-                    borderBottom: activeTab === tab.id ? '2px solid var(--accent)' : '2px solid transparent',
-                  }}>
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-
-            {activeTab === 'flags' && <FlagList flags={result.flags || []} />}
-            {activeTab === 'community' && <CommunityReports domain={result.domain} />}
-            {activeTab === 'report-authority' && <AuthorityGuide domain={result.domain} />}
-          </div>
-        )}
-      </main>
-    </div>
-  )
-}
